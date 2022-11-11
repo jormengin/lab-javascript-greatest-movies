@@ -32,7 +32,7 @@ function dramaMoviesScore(moviesArray) {
   if (filterScore.length===0) return 0;
   const totalScore= filterScore.reduce((acc,value) => acc + value, 0)
   let avg= (totalScore/filterScore.length);
-  return (Math.round(avg*100)/100);
+  return (Math.round(avg*100)/100); // se que podria haber hecho Number(....fixedTo(2))
 }
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
