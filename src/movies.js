@@ -18,16 +18,12 @@ function howManyMovies(moviesArray) {
 // Iteration 3: All scores average - Get the average of all scores with 2 decimals
 function scoresAverage(moviesArray) {
   if (moviesArray.length===0) return 0;
-  const scoreArray = moviesArray.map(movie => movie.score);
-  for(i=0;i<scoreArray.length;i++){
-    if (scoreArray[i]===undefined){
-      scoreArray[i]=0;
-    }
-  }
-  const totalScore = scoreArray.reduce((ac,val)=> ac + val,0);
-  return totalScore/scoreArray.length; 
-   //al añadir toFixed(2) el jasmin me pone todo en rojo
+  const scoreArray = moviesArray.filter(movie => movie.score>=0);
+  const totalScore = scoreArray.reduce((ac,val)=> ac + val.score,0);
+  let avg= totalScore/moviesArray.length;
+  return (Math.round(avg*100)/100)
 }
+
 
 // Iteration 4: Drama movies - Get the average of Drama Movies
 function dramaMoviesScore(moviesArray) {
@@ -35,7 +31,8 @@ function dramaMoviesScore(moviesArray) {
   const filterScore = filterDrama.map(movie=>movie.score)
   if (filterScore.length===0) return 0;
   const totalScore= filterScore.reduce((acc,value) => acc + value, 0)
-  return (totalScore/filterScore.length);//de nuevo al usar toFixed(2) jasmine me da error
+  let avg= (totalScore/filterScore.length);
+  return (Math.round(avg*100)/100);
 }
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
@@ -57,7 +54,18 @@ function orderByYear(moviesArray) {
 
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
 function orderAlphabetically(moviesArray) {
-  
+  const moviesCopy = JSON.parse(JSON.stringify(moviesArray));
+  const sortedMovies = moviesCopy.sort((movie1,movie2)=>{
+    if(movie1.title<movie2.title){
+      return -1
+    } else if (movie1.title>movie2.title){
+      return 1
+    } else {
+      return 0;
+    }
+  })
+  const titles = sortedMovies.map(movies=>movies.title)
+  return titles.slice(0,20);
 }
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
